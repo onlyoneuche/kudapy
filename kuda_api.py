@@ -6,36 +6,46 @@ from aes_algorithm import encrypt_AES_GCM, decrypt_AES_GCM
 from rsa_algorithm import rsa_encrypt, rsa_decrypt
 from Crypto.PublicKey import RSA
 
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.serialization import load_pem_public_key
+
+
 
 def kuda(public_key, private_key, client_key):
-    def make_kuda_request(service_type, request_ref, data):
-        # generate a random short_id
-        letters = string.ascii_letters
-        short_id = ''.join(random.choice(letters) for i in range(0, 5))
+    # generate a random short_id
+    letters = string.ascii_letters
+    short_id = ''.join(random.choice(letters) for i in range(0, 5))
 
+    def make_kuda_request(service_type, request_ref, data):
         password = f"{client_key}-{short_id}"
 
         endpoint = "https://kudaopenapi.azurewebsites.net/v1"
-        payload = json.dumps({
-            "service_type": service_type,
-            "request_ref": request_ref,
-            "data": data
-        })
+
+        payload = [
+            {
+                "service_type": service_type,
+                "request_ref": request_ref,
+                "data": data
+            }
+        ]
         
 
         # aes encryption of payload with password
+        print(payload)
+        payload = str(payload)
         payload_to_bytes = bytes(payload, "utf-8")
         encrypted_payload = encrypt_AES_GCM(payload_to_bytes, password)
 
         # rsa encryption of password wih public key
         password_to_bytes = bytes(password, "utf-8")
-        encrypted_password = rsa_encrypt(password, public_key)
+        encrypted_password = rsa_encrypt(password_to_bytes, public_key)
 
         headers = {
             "password": encrypted_password
         }
         encrypted_response = requests.post(
-            endpoint, data=encrypted_payload, headers=headers)
+            endpoint, json=encrypted_payload, headers=headers)
 
         # RSA decrypt password with our privateKey
         decrypted_password = rsa_decrypt(
@@ -53,13 +63,31 @@ def kuda(public_key, private_key, client_key):
 
 
 
-# to be refactored or moved to another file
+# making a call to the endpoint (to be refactored or moved to another file)
 
-public_key = RSA.import_key(open("./public.pem").read())
-private_key = RSA.import_key(open("./private.pem").read())
+
+
+# public_key = RSA.import_key(open("./public.pem").read())
+# private_key = RSA.import_key(open("./private.pem").read())
 client_key = "e58RrN6u74xd1UHcF3OP"
 
-#generate a random tracking_reference
+
+# load public key 
+with open("./public.pem", "rb") as key_file:
+    public_key = load_pem_public_key(key_file.read(), backend=default_backend())
+    # public_key = bytes(key, "utf-8")
+
+# load private key
+with open("./private.pem", "rb") as key_file:
+    private_key = serialization.load_pem_private_key(
+        key_file.read(),
+        password=None,
+        backend=default_backend()
+    )
+    # private_key = RSA.importKey(key)
+
+
+#generate a random tracking_reference and request reference
 n = 11
 request_ref = ''.join(["{}".format(random.randint(0, 9))
                        for num in range(0, n)])

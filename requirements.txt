@@ -1,9 +1,11 @@
 appdirs==1.4.3
 CacheControl==0.12.6
 certifi==2019.11.28
+cffi==1.14.0
 chardet==3.0.4
 colorama==0.4.3
 contextlib2==0.6.0
+cryptography==2.9.2
 distlib==0.3.0
 distro==1.4.0
 html5lib==1.0.1
@@ -14,6 +16,7 @@ msgpack==0.6.2
 packaging==20.3
 pep517==0.8.2
 progress==1.5
+pycparser==2.20
 pycryptodome==3.9.7
 pyparsing==2.4.6
 pytoml==0.1.21
