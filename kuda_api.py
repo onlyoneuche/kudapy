@@ -45,19 +45,20 @@ def kuda(public_key, private_key, client_key):
             "password": encrypted_password
         }
         encrypted_response = requests.post(
-            endpoint, json=encrypted_payload, headers=headers)
+            endpoint, json=str(encrypted_payload), headers=headers)
 
         # RSA decrypt password with our privateKey
-        decrypted_password = rsa_decrypt(
-            encrypted_response.password, private_key)
+        print(encrypted_response.text)
+        # decrypted_password = rsa_decrypt(
+        #     encrypted_response.password, private_key)
 
-        decrypted_password_str = str(decrypted_password, "utf-8")
+        # decrypted_password_str = str(decrypted_password, "utf-8")
 
-        # AES decrypt data with plaintext
-        data = decrypt_AES_GCM(encrypted_response.data, decrypted_password_str)
-        data_str = str(data, "utf-8")
-        parsed_data = json.loads(data)
-        return parsed_data
+        # # AES decrypt data with plaintext
+        # data = decrypt_AES_GCM(encrypted_response.data, decrypted_password_str)
+        # data_str = str(data, "utf-8")
+        # parsed_data = json.loads(data)
+        # return parsed_data
     return make_kuda_request
 
 
