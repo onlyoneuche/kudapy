@@ -6,6 +6,9 @@ from cryptography.hazmat.primitives import hashes
 
 
 def rsa_encrypt(message, public_key):
+	"""
+	encrypt message with RSA public key
+	"""
     ciphertext = public_key.encrypt(
         message,
         padding.OAEP(
@@ -17,6 +20,9 @@ def rsa_encrypt(message, public_key):
     return ciphertext
 
 def rsa_decrypt(ciphertext, private_key):
+	"""
+	decrypt encrypted message with RSA private key
+	"""
 	plaintext = private_key.decrypt(
             ciphertext,
             padding.OAEP(
