@@ -6,9 +6,9 @@ from aes_algorithm import encrypt_AES_GCM, decrypt_AES_GCM
 from rsa_algorithm import rsa_encrypt, rsa_decrypt
 from Crypto.PublicKey import RSA
 
+from cryptography.hazmat.primitives.serialization import load_pem_public_key
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.serialization import load_pem_public_key
 
 
 
@@ -22,33 +22,47 @@ def kuda(public_key, private_key, client_key):
 
         endpoint = "https://kudaopenapi.azurewebsites.net/v1"
 
-        payload = [
-            {
+        payload = {
                 "service_type": service_type,
                 "request_ref": request_ref,
                 "data": data
-            }
-        ]
+                }
         
-
+        mypass = f"Password: {password}"
+        print(mypass)
         # aes encryption of payload with password
-        print(payload)
         payload = str(payload)
         payload_to_bytes = bytes(payload, "utf-8")
         encrypted_payload = encrypt_AES_GCM(payload_to_bytes, password)
+        print("encrypted_payload: ", encrypted_payload)
+
 
         # rsa encryption of password wih public key
         password_to_bytes = bytes(password, "utf-8")
+        print("--------------------------------------------------------")
+        print("password_to_bytes: ", password_to_bytes)
+        print('----------')
+        print("public_key: ", public_key)
+        print('----------')
+        print("private_key: ", private_key)
+        print("--------------------------------------------------------")
         encrypted_password = rsa_encrypt(password_to_bytes, public_key)
+        print("--------------------------------------------------------")
+        print("encrypted_password: ", encrypted_password)
+        print("--------------------------------------------------------")
 
         headers = {
-            "password": encrypted_password
+            "password": encrypted_password,
         }
         encrypted_response = requests.post(
-            endpoint, json=str(encrypted_payload), headers=headers)
+            endpoint, json=str(encrypted_payload),
+            headers=headers
+            )
 
         # RSA decrypt password with our privateKey
-        print(encrypted_response.text)
+        print("encrypted_response: ", encrypted_response.text)
+        print("encrypted_headers: ", encrypted_response.headers)
+
         # decrypted_password = rsa_decrypt(
         #     encrypted_response.password, private_key)
 
@@ -64,19 +78,12 @@ def kuda(public_key, private_key, client_key):
 
 
 
-# making a call to the endpoint (to be refactored or moved to another file)
-
-
-
-# public_key = RSA.import_key(open("./public.pem").read())
-# private_key = RSA.import_key(open("./private.pem").read())
-client_key = "e58RrN6u74xd1UHcF3OP"
-
+# load parameters
+client_key = "7QuX12xfmSpFl8d3a54b"
 
 # load public key 
 with open("./public.pem", "rb") as key_file:
     public_key = load_pem_public_key(key_file.read(), backend=default_backend())
-    # public_key = bytes(key, "utf-8")
 
 # load private key
 with open("./private.pem", "rb") as key_file:
@@ -85,7 +92,6 @@ with open("./private.pem", "rb") as key_file:
         password=None,
         backend=default_backend()
     )
-    # private_key = RSA.importKey(key)
 
 
 #generate a random tracking_reference and request reference
