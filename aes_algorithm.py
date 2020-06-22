@@ -2,6 +2,7 @@ from Crypto.Cipher import AES
 import scrypt
 import os
 import binascii
+import base64
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
@@ -17,7 +18,8 @@ def encrypt_AES_GCM(data, password):
     derived_key = scrypt.hash(password, kdf_salt, N=16384, r=8, p=1, buflen=32)
     aesCipher = AES.new(derived_key, AES.MODE_GCM)
     ciphertext, authTag = aesCipher.encrypt_and_digest(data)
-    return (kdf_salt, ciphertext, aesCipher.nonce, authTag)
+    text = (base64.b64encode(kdf_salt), base64.b64encode(ciphertext), base64.b64encode(aesCipher.nonce), base64.b64encode(authTag))
+    return text
 
 
 def decrypt_AES_GCM(encrypted_data, password):
