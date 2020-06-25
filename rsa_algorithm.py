@@ -4,6 +4,8 @@ import binascii
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import hashes
 
+import base64
+
 
 def rsa_encrypt(message, public_key):
     """
@@ -17,7 +19,8 @@ def rsa_encrypt(message, public_key):
         label = None
         )
     )
-    return ciphertext
+    return base64.b64encode(ciphertext)
+    #return ciphertext
 
 def rsa_decrypt(ciphertext, private_key):
     """

@@ -6,7 +6,7 @@ import random
 import string
 
 
-def generate_id(n, is_letters=True):
+def generate_id(n, is_alphanum=True):
     """
     >>generate a random short_id of length n
     >>is_letters gives a random string of letters by default
@@ -14,9 +14,9 @@ def generate_id(n, is_letters=True):
 
     """
     _id = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, n)])
-    if is_letters:
-        letters = string.ascii_letters
-        _id = ''.join(random.choice(letters) for i in range(0, n))
+    if is_alphanum:
+        letters_and_digits = string.ascii_letters + string.digits
+        _id = ''.join(random.choice(letters_and_digits) for i in range(0, n))
     return _id
 
 
