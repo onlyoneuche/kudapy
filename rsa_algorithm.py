@@ -19,7 +19,7 @@ def rsa_encrypt(message, public_key):
         label = None
         )
     )
-    return base64.b64encode(ciphertext)
+    return base64.b64encode(ciphertext).decode('utf-8')
     #return ciphertext
 
 def rsa_decrypt(ciphertext, private_key):
@@ -34,3 +34,4 @@ def rsa_decrypt(ciphertext, private_key):
                 label=None
             )
         )
+    return plaintext

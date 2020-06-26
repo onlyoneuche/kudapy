@@ -1,6 +1,6 @@
 import requests
 import json
-from aes_algorithm import  aes_encrypt #encrypt_AES_GCM, decrypt_AES_GCM
+from aes_algorithm import  aes_encrypt, aes_decrypt #encrypt_AES_GCM, decrypt_AES_GCM
 from rsa_algorithm import rsa_encrypt, rsa_decrypt
 from Crypto.PublicKey import RSA
 from utils import generate_id
@@ -16,8 +16,8 @@ def kuda(public_key, private_key, client_key):
         endpoint = "https://kudaopenapi.azurewebsites.net/v1"
 
         payload = {
-                "service_type": service_type,
-                "request_ref": request_ref,
+                "serviceType": service_type,
+                "requestRef": request_ref,
                 "data": data
                 }
 
@@ -45,11 +45,21 @@ def kuda(public_key, private_key, client_key):
         print("encrypted_password: ", encrypted_password)
         print("--------------------------------------------------------")
 
+        # encrypted_password = base64.b64decode(encrypted_password)
+        # print("decoded passord", encrypted_password)
+        # decrypted_password = rsa_decrypt(encrypted_password, private_key)
+        # print("decrypted_password", decrypted_password)
+
+        # decrypted_payload = aes_decrypt(encrypted_payload, decrypted_password)
+        # print("decrypted_payload", decrypted_payload)
+
+
+
         headers = {
             "password": encrypted_password,
         }
         encrypted_response = requests.post(
-            endpoint, json=str(encrypted_payload),
+            endpoint, json=encrypted_payload,
             headers=headers
             )
 
@@ -68,4 +78,5 @@ def kuda(public_key, private_key, client_key):
         # data_str = str(data, "utf-8")
         # parsed_data = json.loads(data)
         # return parsed_data
+
     return make_kuda_request
