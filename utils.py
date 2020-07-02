@@ -30,6 +30,7 @@ def load_private_key():
         )
     return private_key
 
-# load public key 
-# with open("./public.pem", "rb") as key_file:
-#     public_key = load_pem_public_key(key_file.read(), backend=default_backend())
+def load_public_key(): 
+    with open("./public.pem", "rb") as key_file:
+        public_key = load_pem_public_key(key_file.read(), backend=default_backend())
+    return public_key

@@ -9,7 +9,7 @@ import base64
 
 
 def kuda(public_key, private_key, client_key):
-    def make_kuda_request(service_type, request_ref, data):
+    def make_kuda_request(service_type, request_ref, data=None):
         short_id = generate_id(5, is_alphanum=True)
         password = f"{client_key}-{short_id}"
 
@@ -28,7 +28,12 @@ def kuda(public_key, private_key, client_key):
         print("payload: ", payload)
         #payload_to_bytes = bytes(payload, "utf-8")
         encrypted_payload = aes_encrypt(payload, password)
-        print("encrypted_payload: ", encrypted_payload)
+        payload_json = json.loads(encrypted_payload)
+        #iv = encrypted_payload['iv']
+        ciphertext = payload_json['ciphertext']
+        ciphertext = json.dumps(ciphertext)
+        print("ciphertext",ciphertext)
+        print("encrypted_payload: ", ciphertext)
 
 
         # rsa encryption of password wih public key
@@ -58,8 +63,11 @@ def kuda(public_key, private_key, client_key):
         headers = {
             "password": encrypted_password,
         }
+        payload_ = {
+            "data":ciphertext
+        }
         encrypted_response = requests.post(
-            endpoint, json=encrypted_payload,
+            endpoint, json=payload_,
             headers=headers
             )
 
