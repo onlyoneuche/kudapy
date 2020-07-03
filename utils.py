@@ -21,16 +21,28 @@ def generate_id(n, is_alphanum=True):
 
 
 # load private key
+# def load_private_key():
+#     with open("./private.pem", "rb") as key_file:
+#         private_key = serialization.load_pem_private_key(
+#             key_file.read(),
+#             password=None,
+#             backend=default_backend()
+#         )
+#     return private_key
+
+# def load_public_key(): 
+#     with open("./public.pem", "rb") as key_file:
+#         public_key = load_pem_public_key(key_file.read(), backend=default_backend())
+#     return public_key
+
+
+
 def load_private_key():
     with open("./private.pem", "rb") as key_file:
-        private_key = serialization.load_pem_private_key(
-            key_file.read(),
-            password=None,
-            backend=default_backend()
-        )
+        private_key = key_file.read()
     return private_key
 
-def load_public_key(): 
+def load_public_key():
     with open("./public.pem", "rb") as key_file:
-        public_key = load_pem_public_key(key_file.read(), backend=default_backend())
+        public_key = key_file.read()
     return public_key

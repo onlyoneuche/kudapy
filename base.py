@@ -9,7 +9,7 @@ client_key = "7QuX12xfmSpFl8d3a54b"
 
 # load private and public keys
 private_key = load_private_key()
-public_key = private_key.public_key()
+public_key = load_public_key()
 
 #generate a random request_reference id
 request_ref = math.floor(random.random() * 1000000000000 + 1)

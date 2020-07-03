@@ -37,15 +37,15 @@ def kuda(public_key, private_key, client_key):
 
 
         # rsa encryption of password wih public key
-        password_to_bytes = bytes(password, "utf-8")
+        #password_to_bytes = bytes(password, "utf-8")
         print("--------------------------------------------------------")
-        print("password_to_bytes: ", password_to_bytes)
+        print("password: ", password)
         print('----------')
         print("public_key: ", public_key)
         print('----------')
         print("private_key: ", private_key)
         print("--------------------------------------------------------")
-        encrypted_password = rsa_encrypt(password_to_bytes, public_key)
+        encrypted_password = rsa_encrypt(password, public_key)
         print("--------------------------------------------------------")
         print("encrypted_password: ", encrypted_password)
         print("--------------------------------------------------------")
