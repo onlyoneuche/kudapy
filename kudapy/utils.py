@@ -1,0 +1,36 @@
+from cryptography.hazmat.primitives.serialization import load_pem_public_key
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+
+import random
+import string
+
+
+def generate_id(n, is_alphanum=True):
+    """
+    generate a random id of length n
+    is_alphanum gives a random string of alphanumerals by default
+    set is_alphanum to False for a random string of numbers
+
+    """
+    _id = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, n)])
+    if is_alphanum:
+        letters_and_digits = string.ascii_letters + string.digits
+        _id = ''.join(random.choice(letters_and_digits) for i in range(0, n))
+    return _id
+
+def load_private_key():
+    """
+    load RSA private key in pem format
+    """
+    with open("./private.pem", "rb") as key_file:
+        private_key = key_file.read()
+    return private_key
+
+def load_public_key():
+    """
+    load RSA public key in pem format
+    """
+    with open("./public.pem", "rb") as key_file:
+        public_key = key_file.read()
+    return public_key
