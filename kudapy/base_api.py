@@ -1,8 +1,8 @@
 import requests
 import json
-from algorithms.aes_algorithm import  aes_encrypt, aes_decrypt
-from algorithms.rsa_algorithm import rsa_encrypt, rsa_decrypt
-from utils import generate_id
+from kudapy.algorithms.aes_algorithm import  aes_encrypt, aes_decrypt
+from kudapy.algorithms.rsa_algorithm import rsa_encrypt, rsa_decrypt
+from kudapy.utils import generate_id
 
 
 
