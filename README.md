@@ -1,32 +1,38 @@
 # kudapy
 
-Python wrapper for making secure request to Kuda API
+Python wrapper for making secure requests to Kuda API
 
 ## Getting started
-
-> - paste your private and public key (both in PEM format) in your project directory
+> - register on kuda bank website to recieve public and private keys in xml format
+> - paste your private and public keys (both in PEM format) in your project directory
 	- both keys come in XML format(YOU NEED TO CONVERT FROM XML TO PEM)
-> - Your client key is the name of your private key file
+> - Your client key is the name of your private key file sent after registration on kuda bank website.
 
-## Using the library
+## Installation
 
-While the repo is not yet on pypi, simply clone this repo and run `pipenv install`
+ `pip3 install kudapy`
 
 ### Library setup
 
 ```py
-from base_api import kuda
+from kudapy.base_api import kuda
 import math
 import random
-from utils import generate_id, load_private_key, load_public_key
+from kuda.utils import generate_id, load_private_key, load_public_key
 
 
 
 client_key = "name-of-private-key-file"
 
 # load private and public keys
-private_key = load_private_key()
-public_key = load_public_key()
+
+"""
+kuda.utils contains 3 utility functions: generate_id, load_private_key and load_public_key
+these are not required but would make life easier
+"""
+
+private_key = load_private_key() #you have to rename your private key .pem file to private.pem
+public_key = load_public_key()	#you have to rename your public key .pem file to public.pem
 
 
 kuda = kuda(public_key, private_key, client_key) # this initializes the Kuda function
@@ -35,8 +41,14 @@ kuda = kuda(public_key, private_key, client_key) # this initializes the Kuda fun
 ### Making a request
 
 ```py
+
+#the kuda function expects at most 3 parameters: service_type, request_ref and data
+#not all requests require the last parameter (data). see sample request below.
+
+
 kuda(service_type, request_ref, data)
 ```
+> Refer to the Kuda Bank API documentation for respective SERVICE TYPES and DATA TYPES
 
 ### Sample request
 
@@ -52,9 +64,6 @@ kuda(public_key, private_key, client_key)("BANK_LIST", request_ref)
 
 
 ```
-
-
-> Refer to the Kuda Bank API documentation for respective SERVICE TYPES and DATA TYPES
 
 ## Contribution & Issues
 
