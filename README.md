@@ -10,7 +10,7 @@ Python wrapper for making secure requests to Kuda API
 
 ## Installation
 
- `pip3 install kudapy`
+ `pip install kudapy`
 
 ### Library setup
 
@@ -34,8 +34,6 @@ these are not required but would make life easier
 private_key = load_private_key() #you have to rename your private key .pem file to private.pem
 public_key = load_public_key()	#you have to rename your public key .pem file to public.pem
 
-
-kuda = kuda(public_key, private_key, client_key) # this initializes the Kuda function
 ```
 
 ### Making a request
