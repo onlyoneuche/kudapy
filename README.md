@@ -48,7 +48,7 @@ kuda(service_type, request_ref, data)
 ```
 > Refer to the Kuda Bank API documentation for respective SERVICE TYPES and DATA TYPES
 
-### Sample request
+### Sample requests
 
 ```py
 # Bank List
@@ -58,8 +58,29 @@ request_ref = math.floor(random.random() * 1000000000000 + 1)
 
 kuda(public_key, private_key, client_key)("BANK_LIST", request_ref)
 
-# expected response is decrypted data from Kuda API
 
+#-------------------------------------------------------------------
+
+#Create a Virtual Account
+
+#generate a random request_reference
+request_ref = math.floor(random.random() * 1000000000000 + 1)
+
+#generate a random tracking_reference id
+short_ref_id = generate_id(5)
+tracking_reference = f"vAcc{short_ref_id}"
+
+
+kuda(public_key, private_key, client_key)("CREATE_VIRTUAL_ACCOUNT", request_ref, {
+    "email": "okonkwo_yusuf@kudabank.com",
+    "phoneNumber": "07011111111",
+    "firstName": "Okonkwo",
+    "lastName": "Yusuf",
+    "trackingReference": tracking_reference
+})
+
+
+## expected response is decrypted data from Kuda API in JSON
 
 ```
 
