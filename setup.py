@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="kudapy",
-    version="0.0.2",
+    version="1.0.3",
     author=version.__author__,
     author_email="daleentontech@gmail.com",
     description="Python wrapper for making secure requests to Kuda API",
@@ -21,4 +21,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    project_urls={
+        'Source': 'https://github.com/daleentontech/kudapy/',
+    },
 )
