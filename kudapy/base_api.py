@@ -53,5 +53,7 @@ def kuda(public_key, private_key, client_key):
         decrypted_data = aes_decrypt(encrypted_data, decrypted_password)
         decrypted_data = str(decrypted_data, 'utf-8')
         print("decrypted_data", decrypted_data)
+        response = json.loads(decrypted_data)
+        return response
 
     return make_kuda_request
