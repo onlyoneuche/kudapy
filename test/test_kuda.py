@@ -28,4 +28,4 @@ def test_user_can_create_virtual_account():
         "trackingReference": tracking_reference
         })
 
-    assert response["Status"] ==False
+    assert response["Status"] == False

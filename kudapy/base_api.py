@@ -23,7 +23,6 @@ def kuda(public_key, private_key, client_key):
         payload = json.dumps(payload)
         encrypted_payload = aes_encrypt(payload, password)
         encrypted_payload_json = json.loads(encrypted_payload)
-        iv = encrypted_payload_json['iv']
         ciphertext = encrypted_payload_json['ciphertext']
 
 
