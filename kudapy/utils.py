@@ -35,3 +35,6 @@ def load_public_key():
 
 def get_request_reference():
     return math.floor(random.random() * 1000000000000 + 1)
+
+def get_tracking_reference():
+    return f"vAcc{generate_id(5)}"
