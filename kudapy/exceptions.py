@@ -1,0 +1,2 @@
+class KudaAPIException(Exception):
+    pass

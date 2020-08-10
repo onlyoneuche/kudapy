@@ -2,6 +2,7 @@ import requests
 import json
 from kudapy.algorithms.aes_algorithm import  aes_encrypt, aes_decrypt
 from kudapy.algorithms.rsa_algorithm import rsa_encrypt, rsa_decrypt
+from kudapy.exceptions import KudaAPIException
 from kudapy.utils import generate_id
 
 
@@ -43,8 +44,11 @@ def kuda(public_key, private_key, client_key):
         # RSA decrypt password with our privateKey
         encrypted_response = encrypted_response.text
         encrypted_response = json.loads(encrypted_response)
-        encrypted_password = encrypted_response["password"]
-        encrypted_data = encrypted_response["data"]
+        try:
+            encrypted_password = encrypted_response["password"]
+            encrypted_data = encrypted_response["data"]
+        except KeyError as ke:
+            raise KudaAPIException("Invalid Credentials", ke)
 
         decrypted_password = rsa_decrypt(encrypted_password, private_key)
 
@@ -53,6 +57,9 @@ def kuda(public_key, private_key, client_key):
         decrypted_data = str(decrypted_data, 'utf-8')
         print("decrypted_data", decrypted_data)
         response = json.loads(decrypted_data)
-        return response
+        if response["Status"] == True:
+            return response
+        else:
+            raise KudaAPIException(response["Message"])
 
     return make_kuda_request
