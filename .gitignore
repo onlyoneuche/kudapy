@@ -88,7 +88,6 @@ ipython_config.py
 
 # pyenv
 .python-version
-Pipfile
 
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
@@ -131,3 +130,4 @@ dmypy.json
 .pyre/
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+.vscode/settings.json

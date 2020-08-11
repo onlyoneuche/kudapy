@@ -1,3 +1,4 @@
+import math
 import random
 import string
 
@@ -30,3 +31,10 @@ def load_public_key():
     with open("./public.pem", "rb") as key_file:
         public_key = key_file.read()
     return public_key
+
+
+def get_request_reference():
+    return math.floor(random.random() * 1000000000000 + 1)
+
+def get_tracking_reference():
+    return f"vAcc{generate_id(5)}"
