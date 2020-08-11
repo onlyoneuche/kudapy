@@ -30,7 +30,7 @@ def test_user_can_create_virtual_account():
     tracking_reference = get_request_reference()
 
     with pytest.raises(KudaAPIException) as e:
-        response = kuda(public_key, private_key, client_key)("CREATE_VIRTUAL_ACCOUNT", request_ref, {
+        kuda(public_key, private_key, client_key)("CREATE_VIRTUAL_ACCOUNT", request_ref, {
         "email": "daon@gmail.com",
         "phoneNumber": "09034514310",
         "firstName": "kelechechukwu",
