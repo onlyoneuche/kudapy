@@ -29,7 +29,7 @@ def test_user_can_create_virtual_account():
     request_ref = get_request_reference()
     tracking_reference = get_tracking_reference()
 
-    with pytest.raises(KudaAPIException) as e:
+    with pytest.raises(KudaAPIException) as e_info:
         kuda(public_key, private_key, client_key)("CREATE_VIRTUAL_ACCOUNT", request_ref, {
         "email": "daon@gmail.com",
         "phoneNumber": "09034514310",
@@ -38,7 +38,7 @@ def test_user_can_create_virtual_account():
         "trackingReference": tracking_reference
         }) 
 
-        assert e.value.args[0] == "You have signed up a customer with this phone number."
+        assert e_info.value.args[0] == "You have signed up a customer with this phone number."
 
 # def test_user_can_create_account_with_nuban():
 #     private_key = load_private_key()
@@ -60,18 +60,18 @@ def test_user_can_create_virtual_account():
 #     assert response["Status"] == True
 
 
-# def test_user_can_make_name_enquiry():
-#     private_key = load_private_key()
-#     public_key = load_public_key()
-#     client_key = "7QuX12xfmSpFl8d3a54b"
-#     request_ref = get_request_reference()
+def test_user_can_make_name_enquiry():
+    private_key = load_private_key()
+    public_key = load_public_key()
+    client_key = "7QuX12xfmSpFl8d3a54b"
+    request_ref = get_request_reference()
 
-#     response = kuda(public_key, private_key, client_key)("NAME_ENQUIRY", request_ref, {
-#         "beneficiaryAccountNumber": "2070527575",
-#         "bankCode": "033"
-#     })
+    response = kuda(public_key, private_key, client_key)("NAME_ENQUIRY", request_ref, {
+        "beneficiaryAccountNumber": "1100000734",
+        "bankCode": "999129"
+    })
 
-#     assert response["Status"] == True
+    assert response["Status"] == True
 
 def test_user_can_make_single_fund_transfer():
     public_key = load_public_key()
@@ -80,7 +80,7 @@ def test_user_can_make_single_fund_transfer():
     request_ref = get_request_reference()
     #tracking_reference = get_tracking_reference()
 
-    with pytest.raises(KudaAPIException) as e:
+    with pytest.raises(KudaAPIException) as e_info:
         kuda(public_key, private_key, client_key)("SINGLE_FUND_TRANSFER", request_ref, {
             "beneficiarybankCode": "033",
             "tran_amount": "100",
@@ -89,4 +89,4 @@ def test_user_can_make_single_fund_transfer():
             "nameEnquiryID": 1
             })
 
-    assert e.value.args[0] == "Initializing"
+    assert e_info.value.args[0] == "Initializing"
