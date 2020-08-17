@@ -40,25 +40,24 @@ def test_user_can_create_virtual_account():
 
         assert e_info.value.args[0] == "You have signed up a customer with this phone number."
 
-# def test_user_can_create_account_with_nuban():
-#     private_key = load_private_key()
-#     public_key = load_public_key()
-#     client_key = "7QuX12xfmSpFl8d3a54b"
-#     request_ref = get_request_reference()
-#     response = kuda(public_key, private_key, client_key)("ONBOARDING", request_ref, {
-#         "gender": "Male",
-#         "address": "321 Hakeem Ipsum Street, Lagos Nigeria",
-#         "countryCode": "234",
-#         "email": "deleguwanemeka@gmail.com",
-#         "phoneNumber": "09090099999",
-#         "state": "Lagos",
-#         "city": "Ikeja",
-#         "lastName": "Emeka",
-#         "otherNames": "Igbondo"
-#     })
+def test_user_can_create_account_with_nuban():
+    private_key = load_private_key()
+    public_key = load_public_key()
+    client_key = "7QuX12xfmSpFl8d3a54b"
+    request_ref = get_request_reference()
+    response = kuda(public_key, private_key, client_key)("ONBOARDING", request_ref, {
+        "gender": "Male",
+        "address": "321 Hakeem Ipsum Street, Lagos Nigeria",
+        "countryCode": "234",
+        "email": "deleguwanemeka@gmail.com",
+        "phoneNumber": "09090099999",
+        "state": "Lagos",
+        "city": "Ikeja",
+        "lastName": "Emeka",
+        "otherNames": "Igbondo"
+    })
 
-#     assert response["Status"] == True
-
+    assert response["Status"] == True
 
 def test_user_can_make_name_enquiry():
     private_key = load_private_key()
@@ -82,9 +81,9 @@ def test_user_can_make_single_fund_transfer():
 
     with pytest.raises(KudaAPIException) as e_info:
         kuda(public_key, private_key, client_key)("SINGLE_FUND_TRANSFER", request_ref, {
-            "beneficiarybankCode": "033",
+            "beneficiarybankCode": "999129",
             "tran_amount": "100",
-            "beneficiaryAccount": "2070527575",
+            "beneficiaryAccount": "1100000734",
             "description": "test",
             "nameEnquiryID": 1
             })
