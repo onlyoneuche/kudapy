@@ -1,7 +1,7 @@
 import hashlib
 import json
 from base64 import b64encode, b64decode
-from Cryptodome.Cipher import AES
+from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 
 
