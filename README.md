@@ -37,13 +37,18 @@ For available actions run help(kuda)
 
 ```py
 
-# Get a list of banks
+# List of banks
 kuda_instance.bank_list()
 
 -------------------------
 
+# Name enquiry
+kuda_instance.name_enquiry("1100000734", "999129")
+
+-------------------------
+
 # Create a virtual account 
-(Provide email, phone, lastname, firstname)
+# (Provide email, phone, lastname, firstname)
 
 kuda_instance.create_virtual_account(
     "okonkwo_yusuf@kudabank.com", 
@@ -55,15 +60,15 @@ kuda_instance.create_virtual_account(
 
 ## Expected response is decrypted data from Kuda API in JSON
 
-You get back two values from the method calls, status and data If status is true, then there is a valid response data else
-the status will be None - with data being the error message.
+You get back two values from the method calls, status and data. If status is true, there is a valid response data else
+the status will be False - with data being the error message.
 
-status, message = kuda_instance.bank_list()
+status, data = kuda_instance.bank_list()
 (True, {'Status': True, 'Message': 'Completed Successfully', ...})
 
 or
-status, message = kuda_instance.name_enquiry('0000000000', 999000')
-(None, 'Cannot validate account number at this time, Please try again')
+status, data = kuda_instance.name_enquiry('0000000000', 999000')
+(False, 'Cannot validate account number at this time, Please try again')
 
 ```
 
