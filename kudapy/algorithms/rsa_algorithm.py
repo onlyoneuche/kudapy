@@ -1,6 +1,4 @@
 from Crypto.PublicKey import RSA
-from Crypto import Random
-from Crypto.Cipher import PKCS1_OAEP
 from Crypto.Cipher import PKCS1_v1_5
 import base64
 
@@ -12,6 +10,7 @@ def rsa_encrypt(message, public_key):
     encrypted_text = rsa_public_key.encrypt(message)
     encrypted_text = base64.b64encode(encrypted_text)
     return encrypted_text
+
 
 def rsa_decrypt(encrypted_text, private_key):
     encrypted_text = base64.b64decode(encrypted_text)

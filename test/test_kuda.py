@@ -1,91 +1,59 @@
 import pytest
-from kudapy.base_api import kuda
+import random
+from kudapy import Kuda
 from kudapy.exceptions import KudaAPIException
-from kudapy.utils import generate_id, get_request_reference, get_tracking_reference, load_private_key, load_public_key
+
+test_private_key = 'test/test_c_private.pem'
+test_public_key = 'test/test_c_public.pem'
+test_client_key = "7QuX12xfmSpFl8d3a54b"
 
 
-def test_api_raises_exception_for_invalid_credentials():
-    private_key = load_private_key()
-    public_key = load_public_key()
-    client_key = "7QuX12xfmSpFl8d3a54b"
-    request_ref = get_request_reference()
+def test_initialization():
+    k_instance = Kuda(test_public_key, test_private_key, test_client_key)
+    assert k_instance is not None
+
+
+def test_initialization_exception_no_parameters():
     with pytest.raises(KudaAPIException):
-        kuda(public_key, private_key, client_key)("Invalid Service Type", request_ref)
+        Kuda(None, None, None)
 
-def test_user_can_fetch_bank_list():
-    private_key = load_private_key()
-    public_key = load_public_key()
-    client_key = "7QuX12xfmSpFl8d3a54b"
-    request_ref = get_request_reference()
-    response = kuda(public_key, private_key, client_key)("BANK_LIST", request_ref)
-    #response = response.json()
 
+def test_fetch_bank_list():
+    k_instance = Kuda(test_public_key, test_private_key, test_client_key)
+    status, response = k_instance.bank_list()
+    assert status
     assert response["Message"] == "Completed Successfully"
 
-def test_user_can_create_virtual_account():
-    private_key = load_private_key()
-    public_key = load_public_key()
-    client_key = "7QuX12xfmSpFl8d3a54b"
-    request_ref = get_request_reference()
-    tracking_reference = get_tracking_reference()
 
-    with pytest.raises(KudaAPIException) as e_info:
-        kuda(public_key, private_key, client_key)("CREATE_VIRTUAL_ACCOUNT", request_ref, {
-        "email": "daon@gmail.com",
-        "phoneNumber": "09034514310",
-        "firstName": "kelechechukwu",
-        "lastName": "Imman",
-        "trackingReference": tracking_reference
-        }) 
+def test_create_virtual_account():
+    k_instance = Kuda(test_public_key, test_private_key, test_client_key)
+    random_email = "dao{}@gmail.com".format(random.randint(100, 5000))
+    random_phone = "080{}".format(random.randint(1000000, 9999999))
+    status, response = k_instance.create_virtual_account(random_email,
+                                                         random_phone, "kelechechukwu", "Imman")
+    assert status
+    assert response["Message"] == "Successful"
 
-        assert e_info.value.args[0] == "You have signed up a customer with this phone number."
 
-def test_user_can_create_account_with_nuban():
-    private_key = load_private_key()
-    public_key = load_public_key()
-    client_key = "7QuX12xfmSpFl8d3a54b"
-    request_ref = get_request_reference()
-    response = kuda(public_key, private_key, client_key)("ONBOARDING", request_ref, {
-        "gender": "Male",
-        "address": "321 Hakeem Ipsum Street, Lagos Nigeria",
-        "countryCode": "234",
-        "email": "deleguwanemeka@gmail.com",
-        "phoneNumber": "09090099999",
-        "state": "Lagos",
-        "city": "Ikeja",
-        "lastName": "Emeka",
-        "otherNames": "Igbondo"
-    })
+def test_name_enquiry():
+    k_instance = Kuda(test_public_key, test_private_key, test_client_key)
+    status, response = k_instance.name_enquiry("1100000734", "999129")
+    assert status
 
-    assert response["Status"] == True
 
-def test_user_can_make_name_enquiry():
-    private_key = load_private_key()
-    public_key = load_public_key()
-    client_key = "7QuX12xfmSpFl8d3a54b"
-    request_ref = get_request_reference()
-
-    response = kuda(public_key, private_key, client_key)("NAME_ENQUIRY", request_ref, {
-        "beneficiaryAccountNumber": "1100000734",
-        "bankCode": "999129"
-    })
-
-    assert response["Status"] == True
+"""
+def test_create_account_with_nuban():
+    k_instance = Kuda(test_public_key, test_private_key, test_client_key)
+    random_email = "dao{}@gmail.com".format(random.randint(100, 5000))
+    random_phone = "080{}".format(random.randint(1000000, 9999999))
+    status, response = k_instance.create_account_with_nuban(random_email,
+        random_phone, "kelechechukwu", "Imman", "James", "Male", "Ikeja",
+        "10 Aso Rock Street, Lagos", "Lagos", "234")
+    assert status
 
 def test_user_can_make_single_fund_transfer():
-    public_key = load_public_key()
-    private_key = load_private_key()
-    client_key = "7QuX12xfmSpFl8d3a54b"
-    request_ref = get_request_reference()
-    #tracking_reference = get_tracking_reference()
-
-    with pytest.raises(KudaAPIException) as e_info:
-        kuda(public_key, private_key, client_key)("SINGLE_FUND_TRANSFER", request_ref, {
-            "beneficiarybankCode": "999129",
-            "tran_amount": "100",
-            "beneficiaryAccount": "1100000734",
-            "description": "test",
-            "nameEnquiryID": 1
-            })
-
-    assert e_info.value.args[0] == "Initializing"
+    k_instance = Kuda(test_public_key, test_private_key, test_client_key)
+    status, response = k_instance.transfer_funds("100", "1100000734", "999129", "1", "test")
+    assert status
+       
+"""

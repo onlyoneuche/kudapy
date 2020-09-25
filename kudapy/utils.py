@@ -1,6 +1,14 @@
 import math
 import random
 import string
+import os
+
+
+def generate_transaction_reference():
+    """
+    Generate transaction reference
+    """
+    return str(math.floor(random.random() * 1000000000000 + 1))
 
 
 def generate_id(n, is_alphanum=True):
@@ -16,25 +24,28 @@ def generate_id(n, is_alphanum=True):
         _id = ''.join(random.choice(letters_and_digits) for i in range(0, n))
     return _id
 
-def load_private_key():
+
+def load_private_key(filepath):
     """
     load RSA private key in pem format
     """
-    with open("./private.pem", "rb") as key_file:
+    if not os.path.exists(filepath):
+        raise ValueError("Private key file not found")
+    with open(filepath, "rb") as key_file:
         private_key = key_file.read()
     return private_key
 
-def load_public_key():
+
+def load_public_key(filepath):
     """
     load RSA public key in pem format
     """
-    with open("./public.pem", "rb") as key_file:
+    if not os.path.exists(filepath):
+        raise ValueError("Public key file not found")
+    with open(filepath, "rb") as key_file:
         public_key = key_file.read()
     return public_key
 
-
-def get_request_reference():
-    return math.floor(random.random() * 1000000000000 + 1)
 
 def get_tracking_reference():
     return f"vAcc{generate_id(5)}"
