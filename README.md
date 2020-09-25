@@ -27,9 +27,9 @@ kuda_instance = Kuda(path_to_public_key, path_to_private_key, client_key_string,
 
 
 #Use the kuda instance to call the appropiate methods of the 
-action you want to perform.
+#action you want to perform.
 
-For available actions run help(kuda)
+#For available actions run help(kuda)
 
 ```
 
@@ -60,8 +60,10 @@ kuda_instance.create_virtual_account(
 
 ## Expected response is decrypted data from Kuda API in JSON
 
+"""
 You get back two values from the method calls, status and data. If status is true, there is a valid response data else
 the status will be False - with data being the error message.
+"""
 
 status, data = kuda_instance.bank_list()
 (True, {'Status': True, 'Message': 'Completed Successfully', ...})
