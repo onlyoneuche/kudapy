@@ -12,75 +12,65 @@ Python wrapper for making secure requests to Kuda API
 
  `pip install kudapy`
 
-### Library setup
-
-```py
-from kudapy.base_api import kuda
-import math
-import random
-from kuda.utils import generate_id, load_private_key, load_public_key
-
-
-
-client_key = "name-of-private-key-file"
-
-# load private and public keys
-
-"""
-kuda.utils contains 3 utility functions: generate_id, load_private_key and load_public_key
-these are not required but would make life easier
-"""
-
-private_key = load_private_key() #you have to rename your private key .pem file to private.pem
-public_key = load_public_key()	#you have to rename your public key .pem file to public.pem
-
-```
 
 ### Making a request
 
 ```py
+from kudapy import kuda
 
-#the kuda function expects at most 3 parameters: service_type, request_ref and data
-#not all requests require the last parameter (data). see sample request below.
+"""
+Save your public and private pem file somewhere on the filesystem. Specify the full path to your keys
+then create a Kuda Object instance. Also provide a client key string and base url (for production).
+"""
+
+kuda_instance = Kuda(path_to_public_key, path_to_private_key, client_key_string, base_url)
 
 
-kuda(service_type, request_ref, data)
+#Use the kuda instance to call the appropiate methods of the 
+#action you want to perform.
+
+#For available actions run help(kuda)
+
 ```
-> Refer to the Kuda Bank API documentation for respective SERVICE TYPES and DATA TYPES
 
 ### Sample requests
 
 ```py
-# Bank List
 
-#generate a random request_reference
-request_ref = math.floor(random.random() * 1000000000000 + 1)
+# List of banks
+kuda_instance.bank_list()
 
-kuda(public_key, private_key, client_key)("BANK_LIST", request_ref)
+-------------------------
 
+# Name enquiry
+kuda_instance.name_enquiry("1100000734", "999129")
 
-#-------------------------------------------------------------------
+-------------------------
 
-#Create a Virtual Account
+# Create a virtual account 
+# (Provide email, phone, lastname, firstname)
 
-#generate a random request_reference
-request_ref = math.floor(random.random() * 1000000000000 + 1)
+kuda_instance.create_virtual_account(
+    "okonkwo_yusuf@kudabank.com", 
+    "07011111111",
+    "Okonkwo",
+    "Yusuf"
+)
+--------------
 
-#generate a random tracking_reference id
-short_ref_id = generate_id(5)
-tracking_reference = f"vAcc{short_ref_id}"
+## Expected response is decrypted data from Kuda API in JSON
 
+"""
+You get back two values from the method calls, status and data. If status is true, there is a valid response data else
+the status will be False - with data being the error message.
+"""
 
-kuda(public_key, private_key, client_key)("CREATE_VIRTUAL_ACCOUNT", request_ref, {
-    "email": "okonkwo_yusuf@kudabank.com",
-    "phoneNumber": "07011111111",
-    "firstName": "Okonkwo",
-    "lastName": "Yusuf",
-    "trackingReference": tracking_reference
-})
+status, data = kuda_instance.bank_list()
+(True, {'Status': True, 'Message': 'Completed Successfully', ...})
 
-
-## expected response is decrypted data from Kuda API in JSON
+or
+status, data = kuda_instance.name_enquiry('0000000000', 999000')
+(False, 'Cannot validate account number at this time, Please try again')
 
 ```
 
