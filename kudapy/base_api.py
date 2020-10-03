@@ -12,13 +12,13 @@ class BaseAPI:
     """
     Specify the full path to your public and private keys to
     create a Kuda object instance. Also provide a client key string
-    and base url (for test or production).
+    and base url (for tests or production).
 
     params:
         - public_keyfile: Full path to your public key pem file
         - private_keyfile: Full path to your private key pem file
         - client_key: Your client key
-        - base_url for production else, its test
+        - base_url for production else, its tests
     """
 
     _BASE_URL = "https://kudaopenapi.azurewebsites.net/v1"
@@ -49,6 +49,7 @@ class BaseAPI:
 
         # aes encryption of payload with password
         payload = json.dumps(payload)
+        print(payload)
         encrypted_payload = aes_encrypt(payload, self._password)
         encrypted_payload_json = json.loads(encrypted_payload)
         ciphertext = encrypted_payload_json['ciphertext']
@@ -84,6 +85,7 @@ class BaseAPI:
         decrypted_data = str(decrypted_data, 'utf-8')
 
         response = json.loads(decrypted_data)
+        print(response)
         if response["Status"]:
             return response["Status"], response
         return False, response["Message"]
