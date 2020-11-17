@@ -1,7 +1,11 @@
 import hashlib
 import json
+import sys
 from base64 import b64encode, b64decode
-from Crypto.Cipher import AES
+if sys.platform == 'darwin':
+    from Cryptodome.Cipher import AES
+else:
+    from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 
 
