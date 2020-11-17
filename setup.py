@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="kudapy",
-    version="1.0.5",
+    version="2.0",
     author=version.__author__,
     author_email="daleentontech@gmail.com",
     description="Python wrapper for making secure requests to Kuda API",
