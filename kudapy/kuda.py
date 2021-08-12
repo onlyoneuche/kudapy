@@ -16,10 +16,10 @@ class Kuda(BaseAPI):
         """
         Create a Kuda virtual account for a user.
         params:
-            - email: user email
-            - phonenumber: user phone number
-            - lastname: user's surname
-            - firstname: user's firstname
+            - email: user's email
+            - phoneNumber: user's phone number
+            - lastName: user's surname
+            - firstName: user's firstname
         """
         service_name = "ADMIN_CREATE_VIRTUAL_ACCOUNT"
         kwargs.update({'trackingReference': get_tracking_reference()})
@@ -31,9 +31,9 @@ class Kuda(BaseAPI):
         Create a Kuda virtual account for a user.
         params:
             - email: user email
-            - phone_number: user phone number
-            - lastname: user's surname
-            - firstname: user's firstname
+            - phoneNumber: user phone number
+            - lastName: user's surname
+            - firstName: user's firstname
             - other_names: Middle name
             - gender: Gender
             - city: City
@@ -49,8 +49,8 @@ class Kuda(BaseAPI):
         """
         Resolve an account number into an account name
         params:
-            - account_number: Nuban account number
-            - bank code: refer to bank list for appropiate bank codes
+            - beneficiaryAccountNumber: Nuban account number
+            - beneficiaryBankCode: refer to bank list for appropiate bank codes
         """
         service_name = "NAME_ENQUIRY"
         status, response = self._make_request(service_name, data=kwargs)
@@ -61,10 +61,12 @@ class Kuda(BaseAPI):
         Transfer funds to an account number
         params:
             - amount: Amount to transfer
-            - account_number: Account number to credit
-            - bank_code: refer to bank list for appropiate bank codes
-            - name_enquiry_id: id of the name enquiry action
-            - description: optional description of transfer
+            - beneficiaryName: Name of the recipient
+            - beneficiaryAccount: Account number to credit
+            - beneficiarybankCode: refer to bank list for appropiate bank codes
+            - name_enquiry_id: ID of the name enquiry action
+            - narration: Optional description of transfer
+            - senderName: Name of the person sending money
         """
         service_name = "SINGLE_FUND_TRANSFER"
         status, response = self._make_request(service_name, data=kwargs)
