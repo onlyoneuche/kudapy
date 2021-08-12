@@ -21,7 +21,7 @@ class Kuda(BaseAPI):
             - lastname: user's surname
             - firstname: user's firstname
         """
-        service_name = "CREATE_VIRTUAL_ACCOUNT"
+        service_name = "ADMIN_CREATE_VIRTUAL_ACCOUNT"
         kwargs.update({'trackingReference': get_tracking_reference()})
         status, response = self._make_request(service_name, data=kwargs)
         return status, response
