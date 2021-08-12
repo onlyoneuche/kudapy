@@ -3,14 +3,14 @@ import random
 from kudapy import Kuda
 from kudapy.exceptions import KudaAPIException
 
-test_private_key = 'tests/test_c_private.pem'
-test_public_key = 'tests/test_c_public.pem'
+test_private_key = 'test_c_private.pem'
+test_public_key = 'test_c_public.pem'
 test_client_key = "7QuX12xfmSpFl8d3a54b"
-
+test_base_url = 'https://kuda-openapi-uat.kudabank.com/v1'
 
 @pytest.fixture(scope="module")
 def kuda_instance():
-    k_instance = Kuda(test_public_key, test_private_key, test_client_key)
+    k_instance = Kuda(test_public_key, test_private_key, test_client_key, test_base_url)
     return k_instance
 
 
