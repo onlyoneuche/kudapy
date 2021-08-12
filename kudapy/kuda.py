@@ -83,3 +83,13 @@ class Kuda(BaseAPI):
         status, response = self._make_request(service_name, data=kwargs)
         return status, response
 
+    def retrieve_virtual_account_balance(self, **kwargs):
+        """
+        retrieve the balance status of a virtual account
+        params:
+            - trackingReference: tracking reference of the virtual account [optional]
+        """
+        service_name = "RETRIEVE_VIRTUAL_ACCOUNT_BALANCE"
+        status, response = self._make_request(service_name, data=kwargs)
+        return status, response
+  
