@@ -39,7 +39,9 @@ class BaseAPI:
         self._password = "{}-{}".format(self._client_key, generate_id(5, is_alphanum=True))
         self._base_url = base_url if base_url else BaseAPI._BASE_URL
 
-    def _make_request(self, service_name, data=None):
+    def _make_request(self, service_name, **kwargs):
+
+        data = kwargs.get('data', None) #pass None to data if not found
 
         payload = {
             "serviceType": service_name,
