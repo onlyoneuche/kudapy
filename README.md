@@ -43,7 +43,7 @@ kuda_instance.bank_list()
 -------------------------
 
 # Name enquiry
-kuda_instance.name_enquiry("1100000734", "999129")
+kuda_instance.name_enquiry(beneficiaryAccountNumber="1100000734", beneficiaryBankCode= "999129")
 
 -------------------------
 
@@ -51,10 +51,10 @@ kuda_instance.name_enquiry("1100000734", "999129")
 # (Provide email, phone, lastname, firstname)
 
 kuda_instance.create_virtual_account(
-    "okonkwo_yusuf@kudabank.com", 
-    "07011111111",
-    "Okonkwo",
-    "Yusuf"
+    email="okonkwo_yusuf@kudabank.com", 
+    phoneNumber="07011111111",
+    lastName="Okonkwo",
+    firstName="Yusuf"
 )
 --------------
 
@@ -69,7 +69,11 @@ status, data = kuda_instance.bank_list()
 (True, {'Status': True, 'Message': 'Completed Successfully', ...})
 
 or
-status, data = kuda_instance.name_enquiry('0000000000', 999000')
+
+status, data = kuda_instance.name_enquiry(
+    beneficiaryAccountNumber='0000000000',
+    beneficiaryBankCode='999000'
+    )
 (False, 'Cannot validate account number at this time, Please try again')
 
 ```
