@@ -32,14 +32,18 @@ def test_fetch_bank_list(kuda_instance):
 def test_create_virtual_account(kuda_instance):
     random_email = "dao{}@gmail.com".format(random.randint(100, 5000))
     random_phone = "080{}".format(random.randint(1000000, 9999999))
-    status, response = kuda_instance.create_virtual_account(random_email,
-                                                            random_phone, "kelechechukwu", "Imman")
+    status, response = kuda_instance.create_virtual_account(
+        email=random_email,
+        phoneNumber=random_phone, 
+        firstName="kelechechukwu",
+        lastName= "Imman"
+        )
     assert status
-    assert response["Message"] == "Successful"
+    assert response["Message"] == 'Account Successfully Created.'
 
 
 def test_name_enquiry(kuda_instance):
-    status, response = kuda_instance.name_enquiry(beneficiaryAccountNumber="1100000734", beneficiaryBankCode="999129")
+    status, _ = kuda_instance.name_enquiry(beneficiaryAccountNumber="1100000734", beneficiaryBankCode="999129")
     assert status
 
 
