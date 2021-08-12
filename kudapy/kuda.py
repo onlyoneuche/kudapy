@@ -93,3 +93,13 @@ class Kuda(BaseAPI):
         status, response = self._make_request(service_name, data=kwargs)
         return status, response
   
+    def retrieve_main_account_transactions(self, **kwargs):
+        """
+        retrieve a list of all transactions for the currently authenticated user
+        params:
+            - pageSize
+            - pageNumber
+        """
+        service_name = "ADMIN_MAIN_ACCOUNT_TRANSACTIONS"
+        status, response = self._make_request(service_name, data=kwargs)
+        return status, response
