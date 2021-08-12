@@ -51,7 +51,7 @@ class BaseAPI:
 
         # aes encryption of payload with password
         payload = json.dumps(payload)
-        print(payload)
+        # print(payload)
         encrypted_payload = aes_encrypt(payload, self._password)
         encrypted_payload_json = json.loads(encrypted_payload)
         ciphertext = encrypted_payload_json['ciphertext']
@@ -87,7 +87,7 @@ class BaseAPI:
         decrypted_data = str(decrypted_data, 'utf-8')
 
         response = json.loads(decrypted_data)
-        print(response)
+        # print(response)
         if response["Status"]:
             return response["Status"], response
         return False, response["Message"]
