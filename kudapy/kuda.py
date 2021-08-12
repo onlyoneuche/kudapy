@@ -12,8 +12,7 @@ class Kuda(BaseAPI):
         status, response = self._make_request(service_name)
         return status, response
 
-    def create_virtual_account(self, email, phone_number, last_name,
-                               first_name):
+    def create_virtual_account(self, **kwargs):
         """
         Create a Kuda virtual account for a user.
         params:
@@ -23,19 +22,11 @@ class Kuda(BaseAPI):
             - firstname: user's firstname
         """
         service_name = "CREATE_VIRTUAL_ACCOUNT"
-        data = {
-            "email": email,
-            "phoneNumber": phone_number,
-            "lastName": last_name,
-            "firstName": first_name,
-            "trackingReference": get_tracking_reference()
-        }
-        status, response = self._make_request(service_name, data)
+        kwargs.update({'trackingReference': get_tracking_reference()})
+        status, response = self._make_request(service_name, data=kwargs)
         return status, response
 
-    def create_account_with_nuban(self, email, phone_number, last_name,
-                                  first_name, other_names, gender,
-                                  city, address, state, country_code):
+    def create_account_with_nuban(self, **kwargs):
         """
         Create a Kuda virtual account for a user.
         params:
@@ -51,22 +42,10 @@ class Kuda(BaseAPI):
             - country_code: Country Code
         """
         service_name = "ONBOARDING"
-        data = {
-            "email": email,
-            "phoneNumber": phone_number,
-            "lastName": last_name,
-            "firstName": first_name,
-            "otherNames": other_names,
-            "gender": gender,
-            "city": city,
-            "address": address,
-            "state": state,
-            "countryCode": country_code
-        }
-        status, response = self._make_request(service_name, data)
+        status, response = self._make_request(service_name, data=kwargs)
         return status, response
 
-    def name_enquiry(self, account_number, bank_code):
+    def name_enquiry(self, **kwargs):
         """
         Resolve an account number into an account name
         params:
@@ -74,16 +53,10 @@ class Kuda(BaseAPI):
             - bank code: refer to bank list for appropiate bank codes
         """
         service_name = "NAME_ENQUIRY"
-        data = {
-            "beneficiaryAccountNumber": account_number,
-            "bankCode": bank_code,
-            "senderTrackingReference": None
-        }
-        status, response = self._make_request(service_name, data)
+        status, response = self._make_request(service_name, data=kwargs)
         return status, response
 
-    def transfer_funds(self, amount, account_number, bank_code,
-                       name_enquiry_id, description=None):
+    def transfer_funds(self, **kwargs):
         """
         Transfer funds to an account number
         params:
@@ -94,12 +67,5 @@ class Kuda(BaseAPI):
             - description: optional description of transfer
         """
         service_name = "SINGLE_FUND_TRANSFER"
-        data = {
-            "beneficiaryAccount": account_number,
-            "beneficiarybankCode": bank_code,
-            "nameEnquiryID": name_enquiry_id,
-            "description": description,
-            "tran_amount": amount,
-        }
-        status, response = self._make_request(service_name, data)
+        status, response = self._make_request(service_name, data=kwargs)
         return status, response
