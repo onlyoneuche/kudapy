@@ -69,3 +69,17 @@ class Kuda(BaseAPI):
         service_name = "SINGLE_FUND_TRANSFER"
         status, response = self._make_request(service_name, data=kwargs)
         return status, response
+
+    def retrieve_transaction_logs(self, **kwargs):
+        """
+        Get a list of all your transactions carried out
+        params:
+            - RequestReference
+            - ResponseReference
+            - FetchSuccessfulRecords: if set to true, only successful transactions will be retrieved
+            - TransactionDate
+        """
+        service_name = "RETRIEVE_TRANSACTION_LOGS"
+        status, response = self._make_request(service_name, data=kwargs)
+        return status, response
+
