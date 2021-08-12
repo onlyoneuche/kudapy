@@ -39,7 +39,7 @@ def test_create_virtual_account(kuda_instance):
 
 
 def test_name_enquiry(kuda_instance):
-    status, response = kuda_instance.name_enquiry("1100000734", "999129")
+    status, response = kuda_instance.name_enquiry(beneficiaryAccountNumber="1100000734", beneficiaryBankCode="999129")
     assert status
 
 
