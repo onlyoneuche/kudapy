@@ -3,14 +3,14 @@ import random
 from kudapy import Kuda
 from kudapy.exceptions import KudaAPIException
 
-test_private_key = 'tests/test_c_private.pem'
-test_public_key = 'tests/test_c_public.pem'
+test_private_key = 'test_c_private.pem'
+test_public_key = 'test_c_public.pem'
 test_client_key = "7QuX12xfmSpFl8d3a54b"
-
+test_base_url = 'https://kuda-openapi-uat.kudabank.com/v1'
 
 @pytest.fixture(scope="module")
 def kuda_instance():
-    k_instance = Kuda(test_public_key, test_private_key, test_client_key)
+    k_instance = Kuda(test_public_key, test_private_key, test_client_key, test_base_url)
     return k_instance
 
 
@@ -32,14 +32,30 @@ def test_fetch_bank_list(kuda_instance):
 def test_create_virtual_account(kuda_instance):
     random_email = "dao{}@gmail.com".format(random.randint(100, 5000))
     random_phone = "080{}".format(random.randint(1000000, 9999999))
-    status, response = kuda_instance.create_virtual_account(random_email,
-                                                            random_phone, "kelechechukwu", "Imman")
+    status, response = kuda_instance.create_virtual_account(
+        email=random_email,
+        phoneNumber=random_phone, 
+        firstName="kelechechukwu",
+        lastName= "Imman"
+        )
     assert status
-    assert response["Message"] == "Successful"
+    assert response["Message"] == 'Account Successfully Created.'
 
 
 def test_name_enquiry(kuda_instance):
-    status, response = kuda_instance.name_enquiry("1100000734", "999129")
+    status, _ = kuda_instance.name_enquiry(beneficiaryAccountNumber="1100000734", beneficiaryBankCode="999129")
+    assert status
+
+def test_retrieve_transaction_logs(kuda_instance):
+    status, resp = kuda_instance.retrieve_transaction_logs()
+    assert status
+
+def test_retrieve_virtual_account_balance(kuda_instance):
+    status, resp = kuda_instance.retrieve_virtual_account_balance()
+    assert status
+
+def test_retrieve_main_account_balance(kuda_instance):
+    status, resp = kuda_instance.retrieve_main_account_balance()
     assert status
 
 

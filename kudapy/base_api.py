@@ -39,7 +39,9 @@ class BaseAPI:
         self._password = "{}-{}".format(self._client_key, generate_id(5, is_alphanum=True))
         self._base_url = base_url if base_url else BaseAPI._BASE_URL
 
-    def _make_request(self, service_name, data=None):
+    def _make_request(self, service_name, **kwargs):
+
+        data = kwargs.get('data', None) #pass None to data if not found
 
         payload = {
             "serviceType": service_name,
@@ -49,7 +51,7 @@ class BaseAPI:
 
         # aes encryption of payload with password
         payload = json.dumps(payload)
-        print(payload)
+        # print(payload)
         encrypted_payload = aes_encrypt(payload, self._password)
         encrypted_payload_json = json.loads(encrypted_payload)
         ciphertext = encrypted_payload_json['ciphertext']
@@ -85,7 +87,7 @@ class BaseAPI:
         decrypted_data = str(decrypted_data, 'utf-8')
 
         response = json.loads(decrypted_data)
-        print(response)
+        # print(response)
         if response["Status"]:
             return response["Status"], response
         return False, response["Message"]
