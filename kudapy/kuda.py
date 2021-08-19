@@ -51,6 +51,10 @@ class Kuda(BaseAPI):
         params:
             - beneficiaryAccountNumber: Nuban account number
             - beneficiaryBankCode: refer to bank list for appropiate bank codes
+            - SenderTrackingReference: "", //Tracking reference of the virtual account trying to do the \
+                                            actual transfer. Leave it empty if the intended transfer is going to be from the main account
+            - isRequestFromVirtualAccount:"" //True or False value. If the intended transfer is to be made\
+                                            by the virtual account
         """
         service_name = "NAME_ENQUIRY"
         status, response = self._make_request(service_name, data=kwargs)
