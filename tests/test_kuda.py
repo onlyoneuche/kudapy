@@ -24,9 +24,8 @@ def test_initialization_exception_no_parameters():
 
 
 def test_fetch_bank_list(kuda_instance):
-    status, response = kuda_instance.bank_list()
-    assert status
-    assert response["Message"] == "Completed Successfully"
+    _, response = kuda_instance.bank_list()
+    assert "Completed Successfully" in response 
 
 
 def test_create_virtual_account(kuda_instance):
