@@ -105,3 +105,15 @@ class Kuda(BaseAPI):
         service_name = "ADMIN_MAIN_ACCOUNT_TRANSACTIONS"
         status, response = self._make_request(service_name, data=kwargs)
         return status, response
+
+
+    def filter_main_account_transactions(self, **kwargs):
+        """
+        retrieve a list of all transactions for the currently authenticated user, filtered by date
+        params:
+            - startDate
+            - endDate
+        """
+        service_name = "ADMIN_MAIN_ACCOUNT_FILTERED_TRANSACTIONS"
+        status, response = self._make_request(service_name, data=kwargs)
+        return status, response
