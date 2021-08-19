@@ -57,7 +57,15 @@ def test_retrieve_main_account_transactions(kuda_instance):
     status, resp = kuda_instance.retrieve_main_account_transactions()
     assert status
 
-
+def test_transfer_fund(kuda_instance):
+    status, resp = kuda_instance.transfer_funds(
+        amount="5000",
+        beneficiaryAccount="2000405584",
+        senderName="Test Testie",
+        narration="test monie"
+        )
+    assert resp['Message'] == 'Transaction successful.'
+    assert status
 """
 def test_create_account_with_nuban():
     k_instance = Kuda(test_public_key, test_private_key, test_client_key)
