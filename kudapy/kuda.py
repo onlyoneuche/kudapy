@@ -131,3 +131,16 @@ class Kuda(BaseAPI):
         status, response = self._make_request(service_name, data=kwargs)
         return status, response
 
+    def withdraw_from_virtual_account(self, **kwargs):
+        """
+        Withdrawing funds from a virtual account means to transfer funds from a virtual account \
+        to an associated KUDA account or to any other Nigerian Bank account.
+        params:
+            - trackingReference: tracking reference of the virtual account
+            - amount: all amounts in kobo
+            - narration [optional]
+
+        """
+        service_name = "WITHDRAW_VIRTUAL_ACCOUNT"
+        status, response = self._make_request(service_name, data=kwargs)
+        return status, response
