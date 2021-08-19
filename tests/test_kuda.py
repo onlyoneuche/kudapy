@@ -42,7 +42,7 @@ def test_create_virtual_account(kuda_instance):
 
 
 def test_name_enquiry(kuda_instance):
-    status, _ = kuda_instance.name_enquiry(beneficiaryAccountNumber="1100000734", beneficiaryBankCode="99912")
+    status, _ = kuda_instance.name_enquiry(beneficiaryAccountNumber="1100307655", beneficiaryBankCode="999129")
     assert status
 
 def test_retrieve_transaction_logs(kuda_instance):
