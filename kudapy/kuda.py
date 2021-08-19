@@ -106,7 +106,6 @@ class Kuda(BaseAPI):
         status, response = self._make_request(service_name, data=kwargs)
         return status, response
 
-
     def filter_main_account_transactions(self, **kwargs):
         """
         retrieve a list of all transactions for the currently authenticated user, filtered by date
@@ -117,3 +116,18 @@ class Kuda(BaseAPI):
         service_name = "ADMIN_MAIN_ACCOUNT_FILTERED_TRANSACTIONS"
         status, response = self._make_request(service_name, data=kwargs)
         return status, response
+
+    def fund_virtual_account(self, **kwargs):
+        """
+        fund an existing virtual account through deposits from an associated KUDA account or\
+        from any other Nigerian bank by transfer
+        params:
+            - trackingReference: tracking reference of the virtual account
+            - amount: all amounts in kobo
+            - narration [optional]
+
+        """
+        service_name = "FUND_VIRTUAL_ACCOUNT"
+        status, response = self._make_request(service_name, data=kwargs)
+        return status, response
+
