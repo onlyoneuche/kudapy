@@ -53,8 +53,8 @@ def test_retrieve_virtual_account_balance(kuda_instance):
     status, resp = kuda_instance.retrieve_virtual_account_balance()
     assert status
 
-def test_retrieve_main_account_balance(kuda_instance):
-    status, resp = kuda_instance.retrieve_main_account_balance()
+def test_retrieve_main_account_transactions(kuda_instance):
+    status, resp = kuda_instance.retrieve_main_account_transactions()
     assert status
 
 
