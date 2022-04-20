@@ -87,10 +87,6 @@ status, data = kuda_instance.name_enquiry(
 
 - [Uchechukwu Darlington Emmanuel](https://github.com/daleentontech)
 
-## Contributor
-
-- [Edward Popoola](https://github.com/erdypee)
-
 # Acknowledgements
 
 - Kuda Bank Team
