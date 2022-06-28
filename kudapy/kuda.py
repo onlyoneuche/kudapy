@@ -51,6 +51,10 @@ class Kuda(BaseAPI):
         params:
             - beneficiaryAccountNumber: Nuban account number
             - beneficiaryBankCode: refer to bank list for appropiate bank codes
+            - SenderTrackingReference: "", //Tracking reference of the virtual account trying to do the \
+                                            actual transfer. Leave it empty if the intended transfer is going to be from the main account
+            - isRequestFromVirtualAccount:"" //True or False value. If the intended transfer is to be made\
+                                            by the virtual account
         """
         service_name = "NAME_ENQUIRY"
         status, response = self._make_request(service_name, data=kwargs)
@@ -103,5 +107,44 @@ class Kuda(BaseAPI):
             - pageNumber
         """
         service_name = "ADMIN_MAIN_ACCOUNT_TRANSACTIONS"
+        status, response = self._make_request(service_name, data=kwargs)
+        return status, response
+
+    def filter_main_account_transactions(self, **kwargs):
+        """
+        retrieve a list of all transactions for the currently authenticated user, filtered by date
+        params:
+            - startDate
+            - endDate
+        """
+        service_name = "ADMIN_MAIN_ACCOUNT_FILTERED_TRANSACTIONS"
+        status, response = self._make_request(service_name, data=kwargs)
+        return status, response
+
+    def fund_virtual_account(self, **kwargs):
+        """
+        fund an existing virtual account through deposits from an associated KUDA account or\
+        from any other Nigerian bank by transfer
+        params:
+            - trackingReference: tracking reference of the virtual account
+            - amount: all amounts in kobo
+            - narration [optional]
+
+        """
+        service_name = "FUND_VIRTUAL_ACCOUNT"
+        status, response = self._make_request(service_name, data=kwargs)
+        return status, response
+
+    def withdraw_from_virtual_account(self, **kwargs):
+        """
+        Withdrawing funds from a virtual account means to transfer funds from a virtual account \
+        to an associated KUDA account or to any other Nigerian Bank account.
+        params:
+            - trackingReference: tracking reference of the virtual account
+            - amount: all amounts in kobo
+            - narration [optional]
+
+        """
+        service_name = "WITHDRAW_VIRTUAL_ACCOUNT"
         status, response = self._make_request(service_name, data=kwargs)
         return status, response

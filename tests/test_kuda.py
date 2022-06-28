@@ -24,9 +24,8 @@ def test_initialization_exception_no_parameters():
 
 
 def test_fetch_bank_list(kuda_instance):
-    status, response = kuda_instance.bank_list()
-    assert status
-    assert response["Message"] == "Completed Successfully"
+    _, response = kuda_instance.bank_list()
+    assert "Completed Successfully" in response 
 
 
 def test_create_virtual_account(kuda_instance):
@@ -43,7 +42,7 @@ def test_create_virtual_account(kuda_instance):
 
 
 def test_name_enquiry(kuda_instance):
-    status, _ = kuda_instance.name_enquiry(beneficiaryAccountNumber="1100000734", beneficiaryBankCode="999129")
+    status, _ = kuda_instance.name_enquiry(beneficiaryAccountNumber="1100307655", beneficiaryBankCode="999129")
     assert status
 
 def test_retrieve_transaction_logs(kuda_instance):
@@ -54,11 +53,19 @@ def test_retrieve_virtual_account_balance(kuda_instance):
     status, resp = kuda_instance.retrieve_virtual_account_balance()
     assert status
 
-def test_retrieve_main_account_balance(kuda_instance):
-    status, resp = kuda_instance.retrieve_main_account_balance()
+def test_retrieve_main_account_transactions(kuda_instance):
+    status, resp = kuda_instance.retrieve_main_account_transactions()
     assert status
 
-
+def test_transfer_fund(kuda_instance):
+    status, resp = kuda_instance.transfer_funds(
+        amount="5000",
+        beneficiaryAccount="2000405584",
+        senderName="Test Testie",
+        narration="test monie"
+        )
+    assert resp['Message'] == 'Transaction successful.'
+    assert status
 """
 def test_create_account_with_nuban():
     k_instance = Kuda(test_public_key, test_private_key, test_client_key)
